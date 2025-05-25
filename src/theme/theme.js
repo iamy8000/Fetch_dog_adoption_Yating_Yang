@@ -12,10 +12,12 @@ const theme = createTheme({
         borderRadius: 16,
     },
     components: {
-        MuiCard: {
+        MuiCardContent: {
             styleOverrides: {
                 root: {
-                    paddingBottom: '16px',
+                    '&:last-child': {
+                        paddingBottom: "8px",
+                    },
                 },
             },
         },

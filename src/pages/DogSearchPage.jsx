@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
-    Box, Typography, Grid, Container
+    Box, Typography, Grid, Container, Button
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -74,10 +74,20 @@ export default function DogSearchPage() {
     };
 
     const handleMatch = async () => {
-        const res = await getMatch(favorites);
-        const matchDogId = res.data.match;
-        const matchDog = await getDogDetails([matchDogId]);
-        alert(`You matched with: ${matchDog.data[0].name}`);
+        if (favorites.length === 0) {
+            alert('Please select at least one favorite dog before getting a match!');
+            return;
+        }
+
+        try {
+            const res = await getMatch(favorites);
+            const matchDogId = res.data.match;
+            const matchDog = await getDogDetails([matchDogId]);
+            alert(`You matched with: ${matchDog.data[0].name}`);
+        } catch (err) {
+            console.error('Match error:', err);
+            alert('Something went wrong while fetching your match. Please try again.');
+        }
     };
 
     return (
@@ -90,7 +100,14 @@ export default function DogSearchPage() {
                             Welcome to Fetch 🐶
                         </Typography>
                         <Typography variant="h6" color="#300D38" mb={2}>
-                            Browse adoptable dogs and find your perfect match!
+                            Browse adoptable dogs and find your perfect match by clicking on
+                            <Button
+                                variant="outlined"
+                                sx={{ color: '#60158f', borderColor: '#60158f', fontWeight: 'bold', marginLeft: '8px' }}
+                                onClick={handleMatch}
+                            >
+                                🔮 Get Match
+                            </Button>
                         </Typography>
                     </Box>
                     <FilterBar
@@ -130,7 +147,6 @@ export default function DogSearchPage() {
                         setPagination={setPagination}
                         size={size}
                         total={total}
-                        handleMatch={handleMatch}
                     />
                 </Container>
             </Box>

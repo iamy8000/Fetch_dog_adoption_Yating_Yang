@@ -1,6 +1,6 @@
-import { Box, Pagination, Button } from '@mui/material';
+import { Box, Pagination } from '@mui/material';
 
-export default function PaginationControls({ pagination, setPagination, size, total, handleMatch }) {
+export default function PaginationControls({ pagination, setPagination, size, total }) {
     const currentPage = Math.floor(pagination.from / size) + 1;
     const totalPages = Math.ceil(total / size);
 
@@ -24,14 +24,6 @@ export default function PaginationControls({ pagination, setPagination, size, to
                     showLastButton
                 />
             </Box>
-
-            <Button
-                variant="outlined"
-                sx={{ color: '#60158f', borderColor: '#60158f', fontWeight: 'bold' }}
-                onClick={handleMatch}
-            >
-                🔮 Get Match
-            </Button>
         </Box>
     );
 }
