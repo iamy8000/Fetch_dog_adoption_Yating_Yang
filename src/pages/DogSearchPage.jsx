@@ -8,20 +8,22 @@ import HeaderBar from '../components/HeaderBar';
 import FilterBar from '../components/FilterBar';
 import DogCard from '../components/DogCard';
 import PaginationControls from '../components/PaginationControls';
+import DogCardSkeleton from '../components/DogCardSkeleton';
 import { getBreeds, searchDogs, getDogDetails, getMatch } from '../api/fetchAPI';
 
 export default function DogSearchPage() {
+    const [loading, setLoading] = useState(false);
     const [dogs, setDogs] = useState([]);
     const [breedOptions, setBreedOptions] = useState([]);
     const [selectedBreeds, setSelectedBreeds] = useState('');
-    const [gender, setGender] = useState('');
     const [ageRange, setAgeRange] = useState('');
+    const [zipCode, setZipCode] = useState('');
     const [favorites, setFavorites] = useState([]);
     const [sortOrder, setSortOrder] = useState('asc');
     const [pagination, setPagination] = useState({ from: 0 });
     const [total, setTotal] = useState(0);
 
-    const size = 10;
+    const size = 25;
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -30,8 +32,10 @@ export default function DogSearchPage() {
     }, []);
 
     const fetchDogs = async () => {
+        setLoading(true);
         const query = {
-            breeds: selectedBreeds ? [selectedBreeds] : undefined,
+            breeds: selectedBreeds ? [selectedBreeds] : [],
+            zipCodes: zipCode ? [zipCode] : [],
             sort: `breed:${sortOrder}`,
             from: pagination.from,
             size,
@@ -43,15 +47,19 @@ export default function DogSearchPage() {
             query.ageMax = max;
         }
 
-        const res = await searchDogs(query);
-        setTotal(res.data.total);
-        const dogsRes = await getDogDetails(res.data.resultIds);
-        setDogs(dogsRes.data);
+        try {
+            const res = await searchDogs(query);
+            setTotal(res.data.total);
+            const dogsRes = await getDogDetails(res.data.resultIds);
+            setDogs(dogsRes.data);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
         fetchDogs();
-    }, [selectedBreeds, sortOrder, pagination, ageRange]);
+    }, [sortOrder, pagination]);
 
     const handleFavorite = (dogId) => {
         setFavorites((prev) =>
@@ -61,7 +69,6 @@ export default function DogSearchPage() {
 
     const clearFilters = () => {
         setSelectedBreeds('');
-        setGender('');
         setAgeRange('');
         setPagination({ from: 0 });
     };
@@ -90,32 +97,39 @@ export default function DogSearchPage() {
                         breedOptions={breedOptions}
                         selectedBreeds={selectedBreeds}
                         setSelectedBreeds={setSelectedBreeds}
-                        gender={gender}
-                        setGender={setGender}
                         ageRange={ageRange}
                         setAgeRange={setAgeRange}
                         sortOrder={sortOrder}
                         setSortOrder={setSortOrder}
                         clearFilters={clearFilters}
                         fetchDogs={fetchDogs}
+                        zipCode={zipCode}
+                        setZipCode={setZipCode}
                     />
 
                     <Grid container spacing={3} justifyContent="center">
-                        {dogs.map((dog) => (
-                            <Grid item key={dog.id}>
-                                <DogCard
-                                    dog={dog}
-                                    isFavorite={favorites.includes(dog.id)}
-                                    onToggleFavorite={handleFavorite}
-                                />
-                            </Grid>
-                        ))}
+                        {loading
+                            ? Array.from({ length: size }).map((_, idx) => (
+                                <Grid item key={idx}>
+                                    <DogCardSkeleton />
+                                </Grid>
+                            ))
+                            : dogs.map((dog) => (
+                                <Grid item key={dog.id}>
+                                    <DogCard
+                                        dog={dog}
+                                        isFavorite={favorites.includes(dog.id)}
+                                        onToggleFavorite={handleFavorite}
+                                    />
+                                </Grid>
+                            ))}
                     </Grid>
 
                     <PaginationControls
                         pagination={pagination}
                         setPagination={setPagination}
                         size={size}
+                        total={total}
                         handleMatch={handleMatch}
                     />
                 </Container>

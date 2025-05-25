@@ -3,7 +3,11 @@ import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material'
 export default function DogCard({ dog, isFavorite, onToggleFavorite }) {
     return (
         <Card
-            sx={{ height: 360, width: 240, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 6px 20px rgba(0,0,0,0.1)', p: 1 }}
+            sx={{ height: 360, width: 240, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '16px', overflow: 'hidden', 
+                boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
+                boxShadow: "none",
+                p: 1 
+            }}
         >
             <CardMedia
                 component="img"
@@ -12,7 +16,7 @@ export default function DogCard({ dog, isFavorite, onToggleFavorite }) {
                 alt={dog.name}
                 sx={{ objectFit: 'cover', borderRadius: '12px' }}
             />
-            <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
+            <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', }}>
                 <Typography variant="h6" fontWeight="bold" color="#60158f" gutterBottom sx={{ fontSize: '1.1rem' }}>
                     {dog.name}
                 </Typography>
