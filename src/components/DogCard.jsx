@@ -3,10 +3,17 @@ import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material'
 export default function DogCard({ dog, isFavorite, onToggleFavorite }) {
     return (
         <Card
-            sx={{ height: 360, width: 240, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '16px', overflow: 'hidden', 
-                boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
+            sx={{ 
+                height: 360, 
+                width: 240, 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'space-between', 
+                borderRadius: '16px', 
+                overflow: 'hidden', 
+                // boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
                 boxShadow: "none",
-                p: 1 
+                p: 1,
             }}
         >
             <CardMedia

@@ -11,6 +11,15 @@ const theme = createTheme({
     shape: {
         borderRadius: 16,
     },
+    components: {
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    paddingBottom: '16px',
+                },
+            },
+        },
+    },
 });
 
 export default theme;

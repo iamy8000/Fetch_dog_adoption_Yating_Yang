@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { getBreeds } from '../api/fetchAPI';
 
 export const isAuthenticated = async () => {
   try {
-    await axios.get('/dogs/breeds');
+    await getBreeds();
     return true;
   } catch {
     return false;
