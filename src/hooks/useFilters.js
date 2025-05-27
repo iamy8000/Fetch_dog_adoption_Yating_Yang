@@ -1,22 +1,22 @@
 import { useState, useCallback } from 'react';
 
 export const useFilters = () => {
-  const [selectedBreeds, setSelectedBreeds] = useState('');
+  const [selectedBreeds, setSelectedBreeds] = useState([]);
   const [ageRange, setAgeRange] = useState('');
-  const [zipCode, setZipCode] = useState('');
+  const [zipCodes, setZipCodes] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
 
   const clearFilters = useCallback(() => {
-    setSelectedBreeds('');
+    setSelectedBreeds([]);
+    setZipCodes([]);
     setAgeRange('');
-    setZipCode('');
     setSortOrder('asc');
   }, []);
 
   const getSearchQuery = useCallback((pagination, size) => {
     const query = {
-      breeds: selectedBreeds ? [selectedBreeds] : [],
-      zipCodes: zipCode ? [zipCode] : [],
+      breeds: selectedBreeds,
+      zipCodes: zipCodes,
       sort: `breed:${sortOrder}`,
       from: pagination.from,
       size,
@@ -29,20 +29,17 @@ export const useFilters = () => {
     }
 
     return query;
-  }, [selectedBreeds, ageRange, zipCode, sortOrder]);
+  }, [selectedBreeds, zipCodes, ageRange, sortOrder]);
 
   return {
-    // 狀態
     selectedBreeds,
+    zipCodes,
     ageRange,
-    zipCode,
     sortOrder,
-    // 設置函數
     setSelectedBreeds,
     setAgeRange,
-    setZipCode,
+    setZipCodes,
     setSortOrder,
-    // 輔助函數
     clearFilters,
     getSearchQuery,
   };

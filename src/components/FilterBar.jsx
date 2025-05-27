@@ -4,16 +4,9 @@ import {
     Paper,
     TextField,
     Autocomplete,
-    Typography,
-    InputAdornment,
 } from '@mui/material';
 import {
-    Pets,
-    Cake,
     RestartAlt,
-    LocationOn,
-    ArrowUpward,
-    ArrowDownward,
 } from '@mui/icons-material';
 
 export default function FilterBar({
@@ -27,8 +20,8 @@ export default function FilterBar({
         setSelectedBreeds,
         ageRange,
         setAgeRange,
-        zipCode,
-        setZipCode,
+        zipCodes,
+        setZipCodes,
         sortOrder,
         setSortOrder,
     } = filters;
@@ -53,35 +46,21 @@ export default function FilterBar({
         >
             {/* Breed Autocomplete */}
             <Autocomplete
+                multiple
+                size="small"
                 options={breedOptions}
                 value={selectedBreeds}
-                onChange={(event, newValue) => setSelectedBreeds(newValue || '')}
-                freeSolo
+                onChange={(e, newValue) => setSelectedBreeds(newValue)}
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        size="small"
-                        placeholder="Breed"
-                        sx={{
-                            minWidth: 160,
-                            // borderRadius: 0,
-                            // '& .MuiOutlinedInput-root': {
-                            //     borderRadius: 0,
-                            // },
-                        }}
-                        InputProps={{
-                            ...params.InputProps,
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Pets />
-                                </InputAdornment>
-                            ),
-                        }}
+                        placeholder="Breeds"
                     />
                 )}
+                sx={{ minWidth: 200 }}
             />
 
-            {/* People (age range) */}
+            {/* Dog (age range) */}
             <TextField
                 select
                 size="small"
@@ -91,17 +70,6 @@ export default function FilterBar({
                 sx={{
                     minWidth: 160,
                     bgcolor: 'white',
-                    // borderRadius: 0,
-                    // '& .MuiOutlinedInput-root': {
-                    //     borderRadius: 0,
-                    // },
-                }}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <Cake />
-                        </InputAdornment>
-                    ),
                 }}
             >
                 <option value="">All Ages</option>
@@ -113,40 +81,27 @@ export default function FilterBar({
             {/* ZIP Code */}
             <TextField
                 size="small"
-                placeholder="ZIP Code"
-                value={zipCode}
-                onChange={(e) => setZipCode(e.target.value)}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <LocationOn />
-                        </InputAdornment>
-                    ),
-                }}
-                sx={{
-                    bgcolor: 'white', minWidth: 140,
-                    // borderRadius: 0,
-                    // '& .MuiOutlinedInput-root': {
-                    //     borderRadius: 0,
-                    // },
-                }}
+                placeholder="ZIP codes (comma separated)"
+                value={zipCodes.join(',')}
+                onChange={(e) =>
+                    setZipCodes(
+                        e.target.value.split(',').map((z) => z.trim()).filter((z) => z)
+                    )
+                }
+                sx={{ minWidth: 200 }}
             />
 
             {/* Sort Button */}
             <Button
+                variant="text"
                 onClick={() => setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
-                startIcon={sortOrder === 'asc' ? <ArrowUpward /> : <ArrowDownward />}
                 sx={{
-                    color: '#60158f',
-                    fontWeight: 'bold',
-                    border: '2px solid #60158f',
-                    borderRadius: '20px',
-                    px: 2,
-                    height: 40,
-                    textTransform: 'none',
+                    color: '#333',
+                    fontWeight: 500,
+                    '&:hover': { bgcolor: '#f2f2f2' },
                 }}
             >
-                Breed ({sortOrder === 'asc' ? 'A → Z' : 'Z → A'})
+                Sort {sortOrder === 'asc' ? 'A → Z' : 'Z → A'}
             </Button>
 
             {/* Clear Filters */}
