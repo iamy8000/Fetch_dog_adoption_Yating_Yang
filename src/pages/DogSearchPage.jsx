@@ -81,12 +81,16 @@ export default function DogSearchPage() {
     return (
         <>
             <HeaderBar />
-            <Box bgcolor="#f8f8f8" minHeight="100vh">
-                <Container sx={{ padding: isMobile ? '16px' : '32px' }}>
+            <Box bgcolor="#f8f8f8" minHeight="100vh" width={"100%"}>
+                <Container maxWidth="false" sx={{ paddingBottom: isMobile ? '16px' : '32px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <FilterBar
+                        breedOptions={breedOptions}
+                        filters={filters}
+                        onClearFilters={handleClearFilters}
+                        onSearch={fetchDogs}
+                    />
+
                     <Box textAlign="center">
-                        <Typography variant="h3" fontWeight="800" color="#300D38" gutterBottom>
-                            Welcome to Fetch 🐶
-                        </Typography>
                         <Typography variant="h6" color="#300D38" mb={2}>
                             Browse adoptable dogs and find your perfect match by clicking on
                             <Button
@@ -98,13 +102,6 @@ export default function DogSearchPage() {
                             </Button>
                         </Typography>
                     </Box>
-
-                    <FilterBar
-                        breedOptions={breedOptions}
-                        filters={filters}
-                        onClearFilters={handleClearFilters}
-                        onSearch={fetchDogs}
-                    />
 
                     <Grid container spacing={3} justifyContent="center">
                         {loading
