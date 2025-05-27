@@ -11,6 +11,7 @@ import PaginationControls from '../components/PaginationControls';
 import DogCardSkeleton from '../components/DogCardSkeleton';
 import { getBreeds, searchDogs, getDogDetails, getMatch } from '../api/fetchAPI';
 import { useFilters } from '../hooks/useFilters';
+import MatchDialog from '../components/MatchDialog';
 
 export default function DogSearchPage() {
     const [loading, setLoading] = useState(false);
@@ -19,6 +20,9 @@ export default function DogSearchPage() {
     const [favorites, setFavorites] = useState([]);
     const [pagination, setPagination] = useState({ from: 0 });
     const [total, setTotal] = useState(0);
+    const [matchDog, setMatchDog] = useState(null);
+    const [matchDialogOpen, setMatchDialogOpen] = useState(false);
+
 
     // 使用 custom hook 處理所有 filter 相關邏輯
     const filters = useFilters();
@@ -70,8 +74,9 @@ export default function DogSearchPage() {
         try {
             const res = await getMatch(favorites);
             const matchDogId = res.data.match;
-            const matchDog = await getDogDetails([matchDogId]);
-            alert(`You matched with: ${matchDog.data[0].name}`);
+            const matchDogRes = await getDogDetails([matchDogId]);
+            setMatchDog(matchDogRes.data[0]);
+            setMatchDialogOpen(true);
         } catch (err) {
             console.error('Match error:', err);
             alert('Something went wrong while fetching your match. Please try again.');
@@ -129,6 +134,11 @@ export default function DogSearchPage() {
                     />
                 </Container>
             </Box>
+            <MatchDialog
+                open={matchDialogOpen}
+                dog={matchDog}
+                onClose={() => setMatchDialogOpen(false)}
+            />
         </>
     );
 }

@@ -1,51 +1,78 @@
-import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material';
+import {
+    Card,
+    CardContent,
+    CardMedia,
+    Typography,
+    IconButton,
+} from '@mui/material';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
 
 export default function DogCard({ dog, isFavorite, onToggleFavorite }) {
     return (
         <Card
             sx={{
-                minHeight: 300,
                 width: 240,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                borderRadius: '16px',
+                boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.08)',
                 overflow: 'hidden',
-                boxShadow: "none",
-                p: 1,
+                position: 'relative',
+                transition: 'transform 0.2s ease-in-out',
+                '&:hover': {
+                    transform: 'scale(1.015)',
+                },
             }}
         >
+            {/* Heart Icon */}
+            <IconButton
+                onClick={() => onToggleFavorite(dog.id)}
+                sx={{
+                    position: 'absolute',
+                    top: 10,
+                    right: 10,
+                    zIndex: 2,
+                    bgcolor: 'rgba(255,255,255,0.9)',
+                    '&:hover': {
+                        bgcolor: 'white',
+                    },
+                }}
+            >
+                {isFavorite ? (
+                    <Favorite sx={{ color: '#FF385C' }} /> 
+                ) : (
+                    <FavoriteBorder sx={{ color: '#666' }} /> 
+                )}
+            </IconButton>
+
             <CardMedia
                 component="img"
                 height="180"
                 image={dog.img}
                 alt={dog.name}
-                sx={{ objectFit: 'cover', borderRadius: '12px' }}
+                sx={{
+                    objectFit: 'cover',
+                    width: '100%',
+                }}
             />
-            <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingBottom: '16px' }}>
-                <Typography variant="h6" fontWeight="bold" color="#60158f" gutterBottom sx={{ fontSize: '1.1rem' }}>
+
+            <CardContent sx={{ px: 2, pb: 2 }}>
+                <Typography
+                    variant="subtitle1"
+                    fontWeight="bold"
+                    sx={{ color: '#111', fontSize: '1rem', mb: 0.5 }}
+                >
                     {dog.name}
                 </Typography>
-                <Typography variant="body2" sx={{ mb: 1 }}>
-                    <strong>Breed:</strong> {dog.breed}<br />
-                    <strong>Age:</strong> {dog.age} | <strong>Zip:</strong> {dog.zip_code}
+
+                <Typography variant="body2" sx={{ color: '#555', mb: 0.3 }}>
+                    Breed: {dog.breed}
                 </Typography>
-                <Button
-                    variant={isFavorite ? 'contained' : 'outlined'}
-                    onClick={() => onToggleFavorite(dog.id)}
-                    sx={{
-                        mt: 'auto',
-                        bgcolor: isFavorite ? '#ee3ec9' : 'white',
-                        color: isFavorite ? 'white' : '#60158f',
-                        borderColor: '#60158f',
-                        fontWeight: 'bold',
-                        borderRadius: '50px',
-                        '&:hover': { bgcolor: isFavorite ? '#e84ed0' : '#f2e2ff' }
-                    }}
-                    fullWidth
-                >
-                    {isFavorite ? '❤️ Favorited' : '♡ Favorite'}
-                </Button>
+
+                <Typography variant="body2" sx={{ color: '#555', mb: 0.3 }}>
+                    Age: {dog.age}
+                </Typography>
+
+                <Typography variant="body2" sx={{ color: '#555' }}>
+                    Zip code: {dog.zip_code}
+                </Typography>
             </CardContent>
         </Card>
     );
