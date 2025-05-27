@@ -1,16 +1,10 @@
-import { Box, FormControl, Select, MenuItem, InputLabel, Button, Paper, TextField, Autocomplete, Typography } from '@mui/material';
-import { Pets, Female, Cake, RestartAlt, LocationOn, ArrowUpward, ArrowDownward } from '@mui/icons-material';
+import { Box, Button, Paper, TextField, Autocomplete, Typography } from '@mui/material';
+import { Pets, Cake, RestartAlt, LocationOn, ArrowUpward, ArrowDownward } from '@mui/icons-material';
 
 
 export default function FilterBar({ breedOptions, selectedBreeds, setSelectedBreeds, ageRange, setAgeRange, sortOrder, setSortOrder, clearFilters, fetchDogs, zipCode, setZipCode }) {
     return (
         <Box
-            // component={Paper}
-            // elevation={2}
-            // sx={{ borderRadius: '16px', p: 2, mt: 2, mb: 2, display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center', justifyContent: 'space-between',
-            //     // border: '1px solid #e0e0e0',
-            //     bgcolor: "#ffef81"
-            // }}
             component={Paper}
             elevation={0}
             sx={{
@@ -23,9 +17,9 @@ export default function FilterBar({ breedOptions, selectedBreeds, setSelectedBre
                 gap: 1,
                 alignItems: 'center',
                 justifyContent: 'space-around',
-                bgcolor: '#ffef81',
+                // bgcolor: '#fba919',
                 border: '4px solid #60158f',
-                boxShadow: '0px 6px 0px #300D38'
+                // boxShadow: '0px 6px 0px #300D38'
             }}
         >
             <Box>
@@ -35,19 +29,6 @@ export default function FilterBar({ breedOptions, selectedBreeds, setSelectedBre
                     value={selectedBreeds}
                     onChange={(event, newValue) => setSelectedBreeds(newValue || '')}
                     freeSolo
-                    // renderInput={(params) => (
-                    //     <TextField
-                    //         {...params}
-                    //         placeholder="Search breed..."
-                    //         size="small"
-                    //         InputLabelProps={{ shrink: false }}
-                    //         InputProps={{
-                    //             ...params.InputProps,
-                    //             startAdornment: <Pets sx={{ mr: 1, color: '#60158f' }} />,
-                    //         }}
-                    //     />
-                    // )}
-                    // sx={{ minWidth: 200 }}
                     renderInput={(params) => (
                         <TextField
                             {...params}
@@ -96,18 +77,6 @@ export default function FilterBar({ breedOptions, selectedBreeds, setSelectedBre
                     <option value="8+">Senior (8+)</option>
                 </TextField>
             </Box>
-
-            {/* <Box>
-                <Typography variant="body2" fontWeight="bold" color="#60158f" mb={0.5}>ZIP Code</Typography>
-                <TextField
-                    size="small"
-                    placeholder="Enter ZIP code"
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
-                    InputLabelProps={{ shrink: false }}
-                    InputProps={{ startAdornment: <LocationOn sx={{ mr: 1, color: '#60158f' }} /> }}
-                />
-            </Box> */}
             <Box>
                 <Typography variant="body2" fontWeight="bold" color="#60158f" mb={0.5}>ZIP Code</Typography>
                 <TextField
@@ -120,13 +89,11 @@ export default function FilterBar({ breedOptions, selectedBreeds, setSelectedBre
                     sx={{ bgcolor: 'white', borderRadius: '16px' }}
                 />
             </Box>
-
-
-            {/* <Box>
+            <Box>
                 <Typography variant="body2" fontWeight="bold" color="#60158f" mb={0.5}>Sort</Typography>
                 <Button
                     onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
-                    // startIcon={sortOrder === 'asc' ? <ArrowUpward /> : <ArrowDownward />}
+                    startIcon={sortOrder === 'asc' ? <ArrowUpward /> : <ArrowDownward />}
                     sx={{
                         color: '#60158f',
                         fontWeight: 'bold',
@@ -140,27 +107,27 @@ export default function FilterBar({ breedOptions, selectedBreeds, setSelectedBre
                 >
                     Breed ({sortOrder === 'asc' ? 'A → Z' : 'Z → A'})
                 </Button>
-            </Box> */}
-
-            <Button
-                variant="outlined"
-                startIcon={<RestartAlt />}
-                onClick={clearFilters}
-                // sx={{ borderColor: '#888', color: '#555', fontWeight: 'bold', px: 3, height: 40, borderRadius: '999px' }}
-                sx={{
-                    borderColor: '#60158f',
-                    color: '#60158f',
-                    fontWeight: 'bold',
-                    px: 3,
-                    height: 40,
-                    borderRadius: '999px',
-                    bgcolor: 'white',
-                    '&:hover': { bgcolor: '#ffe0fa' },
-                }}
-
-            >
-                Clear Filters
-            </Button>
+            </Box>
+            <Box>
+                <Typography sx={{ visibility: 'hidden', mb: 0.5 }}>Placeholder</Typography>
+                <Button
+                    variant="outlined"
+                    startIcon={<RestartAlt />}
+                    onClick={clearFilters}
+                    sx={{
+                        borderColor: '#60158f',
+                        color: '#60158f',
+                        fontWeight: 'bold',
+                        px: 3,
+                        height: 40,
+                        borderRadius: '999px',
+                        bgcolor: 'white',
+                        '&:hover': { bgcolor: '#ffe0fa' },
+                    }}
+                >
+                    Clear Filters
+                </Button>
+            </Box>
 
             <Button
                 variant="contained"
