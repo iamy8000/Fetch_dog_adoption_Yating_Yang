@@ -10,18 +10,18 @@ import DogCard from '../components/DogCard';
 import PaginationControls from '../components/PaginationControls';
 import DogCardSkeleton from '../components/DogCardSkeleton';
 import { getBreeds, searchDogs, getDogDetails, getMatch } from '../api/fetchAPI';
+import { useFilters } from '../hooks/useFilters';
 
 export default function DogSearchPage() {
     const [loading, setLoading] = useState(false);
     const [dogs, setDogs] = useState([]);
     const [breedOptions, setBreedOptions] = useState([]);
-    const [selectedBreeds, setSelectedBreeds] = useState('');
-    const [ageRange, setAgeRange] = useState('');
-    const [zipCode, setZipCode] = useState('');
     const [favorites, setFavorites] = useState([]);
-    const [sortOrder, setSortOrder] = useState('asc');
     const [pagination, setPagination] = useState({ from: 0 });
     const [total, setTotal] = useState(0);
+
+    // 使用 custom hook 處理所有 filter 相關邏輯
+    const filters = useFilters();
 
     const size = 25;
     const theme = useTheme();
@@ -33,19 +33,7 @@ export default function DogSearchPage() {
 
     const fetchDogs = async () => {
         setLoading(true);
-        const query = {
-            breeds: selectedBreeds ? [selectedBreeds] : [],
-            zipCodes: zipCode ? [zipCode] : [],
-            sort: `breed:${sortOrder}`,
-            from: pagination.from,
-            size,
-        };
-
-        if (ageRange) {
-            const [min, max] = ageRange.split('-');
-            query.ageMin = min;
-            query.ageMax = max;
-        }
+        const query = filters.getSearchQuery(pagination, size);
 
         try {
             const res = await searchDogs(query);
@@ -59,18 +47,18 @@ export default function DogSearchPage() {
 
     useEffect(() => {
         fetchDogs();
-    }, [sortOrder, pagination]);
+    }, [filters.sortOrder, pagination]);
+
+    const handleClearFilters = () => {
+        filters.clearFilters();
+        setPagination({ from: 0 });
+    };
+
 
     const handleFavorite = (dogId) => {
         setFavorites((prev) =>
             prev.includes(dogId) ? prev.filter((id) => id !== dogId) : [...prev, dogId]
         );
-    };
-
-    const clearFilters = () => {
-        setSelectedBreeds('');
-        setAgeRange('');
-        setPagination({ from: 0 });
     };
 
     const handleMatch = async () => {
@@ -110,18 +98,12 @@ export default function DogSearchPage() {
                             </Button>
                         </Typography>
                     </Box>
+
                     <FilterBar
                         breedOptions={breedOptions}
-                        selectedBreeds={selectedBreeds}
-                        setSelectedBreeds={setSelectedBreeds}
-                        ageRange={ageRange}
-                        setAgeRange={setAgeRange}
-                        sortOrder={sortOrder}
-                        setSortOrder={setSortOrder}
-                        clearFilters={clearFilters}
-                        fetchDogs={fetchDogs}
-                        zipCode={zipCode}
-                        setZipCode={setZipCode}
+                        filters={filters}
+                        onClearFilters={handleClearFilters}
+                        onSearch={fetchDogs}
                     />
 
                     <Grid container spacing={3} justifyContent="center">

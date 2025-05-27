@@ -18,17 +18,21 @@ import {
 
 export default function FilterBar({
     breedOptions,
-    selectedBreeds,
-    setSelectedBreeds,
-    ageRange,
-    setAgeRange,
-    sortOrder,
-    setSortOrder,
-    clearFilters,
-    fetchDogs,
-    zipCode,
-    setZipCode,
+    filters,
+    onClearFilters,
+    onSearch,
 }) {
+    const {
+        selectedBreeds,
+        setSelectedBreeds,
+        ageRange,
+        setAgeRange,
+        zipCode,
+        setZipCode,
+        sortOrder,
+        setSortOrder,
+    } = filters;
+
     return (
         <Box
             component={Paper}
@@ -150,7 +154,7 @@ export default function FilterBar({
             <Button
                 variant="outlined"
                 startIcon={<RestartAlt />}
-                onClick={clearFilters}
+                onClick={onClearFilters}
                 sx={{
                     borderColor: '#60158f',
                     color: '#60158f',
@@ -165,7 +169,7 @@ export default function FilterBar({
             {/* Main CTA */}
             <Button
                 variant="contained"
-                onClick={fetchDogs}
+                onClick={onSearch}
                 sx={{
                     bgcolor: '#300D38',
                     color: 'white',
