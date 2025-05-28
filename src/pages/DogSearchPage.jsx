@@ -120,20 +120,20 @@ export default function DogSearchPage() {
                         </Box>
                     )}
 
-                    <Box textAlign="center" sx={isMobile && { py: 2 }}>
+                    <Box textAlign="center" sx={isMobile && { pt: 2, pb: 1 }}>
                         <Typography variant={isMobile ? "body2" : "h6"} color="#300D38" sx={isMobile && { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-                            Browse adoptable dogs and find your perfect match
+                            Browse adoptable dogs and
                             <Button
                                 variant="outlined"
                                 sx={{ color: '#60158f', borderColor: '#60158f', fontWeight: 'bold', ml: 1 }}
                                 onClick={handleMatch}
                             >
-                                🔮 Get Match
+                                🔮 Get Matched from Favorites
                             </Button>
                         </Typography>
                     </Box>
 
-                    <Box sx={{ width: '100%', textAlign: isMobile ? 'center' : 'right', mb: 2, px: 2 }}>
+                    <Box sx={{ width: '100%', textAlign: isMobile ? 'center' : 'right', mb: isMobile && 1, px: isMobile ? 0 : 5 }}>
                         <Typography
                             variant="body2"
                             onClick={() => filters.setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
