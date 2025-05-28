@@ -7,13 +7,13 @@ import {
     Chip,
     Typography,
 } from '@mui/material';
-import zipData from '../data/zip_city_state.json';
 
 export default function FilterBar({
     breedOptions,
     filters,
     onClearFilters,
     onSearch,
+    mobileFilterOpen
 }) {
     const {
         selectedBreeds,
@@ -47,18 +47,23 @@ export default function FilterBar({
         <Paper
             elevation={1}
             sx={{
-                borderRadius: '16px',
+                borderRadius: '20px',
                 p: 2,
                 mt: 2,
                 mb: 3,
-                boxShadow: '0px 2px 8px rgba(0,0,0,0.1)',
-                width: '100%',
+                boxShadow: mobileFilterOpen ? 'none' : '0px 2px 8px rgba(0,0,0,0.1)',
                 maxWidth: '1000px',
             }}
         >
             {/* Top row: Inputs */}
             <Box
-                sx={{
+                sx={mobileFilterOpen ? {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    gap: 2,
+                } : {
                     display: 'flex',
                     flexWrap: 'wrap',
                     gap: 1,
@@ -119,25 +124,34 @@ export default function FilterBar({
                 />
 
                 {/* Main CTA */}
-                <Button
-                    variant="contained"
-                    onClick={onSearch}
-                    sx={{
-                        bgcolor: '#300D38',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        borderRadius: '20px',
-                        height: 40,
-                        px: 4,
-                        '&:hover': { bgcolor: '#7d1f70' },
-                    }}
-                >
-                    Search
-                </Button>
+                {!mobileFilterOpen &&
+                    <Button
+                        variant="contained"
+                        onClick={onSearch}
+                        sx={{
+                            bgcolor: '#300D38',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            borderRadius: '20px',
+                            height: 40,
+                            px: 4,
+                            '&:hover': { bgcolor: '#7d1f70' },
+                        }}
+                    >
+                        Search
+                    </Button>
+                }
+
             </Box>
             {(showClearAll || sortOrder !== 'asc') && (
                 <Box
-                    sx={{
+                    sx={mobileFilterOpen ? {
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        flexDirection: 'row',
+                        mt: 3,
+                        gap:1,
+                    } : {
                         display: 'flex',
                         flexWrap: 'wrap',
                         alignItems: 'center',
@@ -172,7 +186,7 @@ export default function FilterBar({
                         />
                     )}
 
-                    {showClearAll && (
+                    {showClearAll && !mobileFilterOpen && (
                         <Typography
                             variant="body2"
                             onClick={onClearFilters}

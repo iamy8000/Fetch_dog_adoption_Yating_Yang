@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
-    Box, Typography, Grid, Container, Button
+    Box, Typography, Grid, Container, Button, Paper, IconButton, Fade
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -12,6 +12,7 @@ import DogCardSkeleton from '../components/DogCardSkeleton';
 import { getBreeds, searchDogs, getDogDetails, getMatch } from '../api/fetchAPI';
 import { useFilters } from '../hooks/useFilters';
 import MatchDialog from '../components/MatchDialog';
+import FilterDrawer from '../components/FilterDrawer';
 
 export default function DogSearchPage() {
     const [loading, setLoading] = useState(false);
@@ -22,12 +23,13 @@ export default function DogSearchPage() {
     const [total, setTotal] = useState(0);
     const [matchDog, setMatchDog] = useState(null);
     const [matchDialogOpen, setMatchDialogOpen] = useState(false);
+    const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
     const filters = useFilters();
-
     const size = 25;
+
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     useEffect(() => {
         getBreeds().then((res) => setBreedOptions(res.data));
@@ -36,7 +38,6 @@ export default function DogSearchPage() {
     const fetchDogs = async () => {
         setLoading(true);
         const query = filters.getSearchQuery(pagination, size);
-
         try {
             const res = await searchDogs(query);
             setTotal(res.data.total);
@@ -55,7 +56,6 @@ export default function DogSearchPage() {
         filters.clearFilters();
         setPagination({ from: 0 });
     };
-
 
     const handleFavorite = (dogId) => {
         setFavorites((prev) =>
@@ -83,22 +83,49 @@ export default function DogSearchPage() {
 
     return (
         <>
-            <HeaderBar />
-            <Box bgcolor="#f8f8f8" minHeight="100vh" width={"100%"}>
-                <Container maxWidth="false" sx={{ paddingBottom: isMobile ? '16px' : '32px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <FilterBar
-                        breedOptions={breedOptions}
-                        filters={filters}
-                        onClearFilters={handleClearFilters}
-                        onSearch={fetchDogs}
-                    />
+            <HeaderBar onOpenFilter={() => setMobileFilterOpen(true)} />
 
-                    <Box textAlign="center">
-                        <Typography variant="h6" color="#300D38">
-                            Browse adoptable dogs and find your perfect match by clicking on
+            <FilterDrawer
+                open={mobileFilterOpen}
+                onClose={() => setMobileFilterOpen(false)}
+                onSearch={() => {
+                    fetchDogs();
+                    setMobileFilterOpen(false);
+                }}
+                onClear={handleClearFilters}
+            >
+                <FilterBar
+                    breedOptions={breedOptions}
+                    filters={filters}
+                    onClearFilters={handleClearFilters}
+                    onSearch={() => {
+                        fetchDogs();
+                        setMobileFilterOpen(false);
+                    }}
+                    mobileFilterOpen={mobileFilterOpen}
+                />
+            </FilterDrawer>
+
+            <Box bgcolor="#f8f8f8" minHeight="100vh" width="100%">
+                <Container maxWidth={false} >
+                    {/* Desktop Filter */}
+                    {!isMobile && (
+                        <Box display="flex" justifyContent="center">
+                            <FilterBar
+                                breedOptions={breedOptions}
+                                filters={filters}
+                                onClearFilters={handleClearFilters}
+                                onSearch={fetchDogs}
+                            />
+                        </Box>
+                    )}
+
+                    <Box textAlign="center" sx={isMobile && { py: 2 }}>
+                        <Typography variant={isMobile ? "body2" : "h6"} color="#300D38" sx={isMobile && { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+                            Browse adoptable dogs and find your perfect match
                             <Button
                                 variant="outlined"
-                                sx={{ color: '#60158f', borderColor: '#60158f', fontWeight: 'bold', marginLeft: '8px' }}
+                                sx={{ color: '#60158f', borderColor: '#60158f', fontWeight: 'bold', ml: 1 }}
                                 onClick={handleMatch}
                             >
                                 🔮 Get Match
@@ -106,7 +133,7 @@ export default function DogSearchPage() {
                         </Typography>
                     </Box>
 
-                    <Box sx={{ width: '100%', textAlign: 'right', mb: 2, px: 2 }}>
+                    <Box sx={{ width: '100%', textAlign: isMobile ? 'center' : 'right', mb: 2, px: 2 }}>
                         <Typography
                             variant="body2"
                             onClick={() => filters.setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
@@ -147,6 +174,7 @@ export default function DogSearchPage() {
                     />
                 </Container>
             </Box>
+
             <MatchDialog
                 open={matchDialogOpen}
                 dog={matchDog}
