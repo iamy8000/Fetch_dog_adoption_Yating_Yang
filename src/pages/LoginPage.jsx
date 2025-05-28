@@ -89,7 +89,7 @@ export default function LoginPage() {
 						</Button>
 					</Box>
 					{/^((?!chrome|android).)*safari/i.test(navigator.userAgent) && (
-						<Typography color="error" fontSize="0.875rem" mt={2}>
+						<Typography color="error" fontSize="0.875rem" mt={3}>
 							Safari may block login due to cookie restrictions. Please use Chrome or Firefox for best experience.
 						</Typography>
 					)}
