@@ -28,33 +28,69 @@ An adorable React app where users can log in, browse adoptable dogs, filter by b
 
 ---
 
-## 📸 Screenshots
+### 🖥️ Desktop View
 
-> Screenshots are located in the `./screenshots/` folder.
-
-### 🖥️ Desktop
-
-#### 🔐 Login Page  
-![Desktop Login](./screenshots/desktop-login.png)
-
-#### 🐶 Dog Search + Filters  
-![Desktop Search](./screenshots/desktop-search.png)
-
-#### 🔮 Match Result  
-![Desktop Match](./screenshots/desktop-match.png)
+<table>
+  <tbody>
+    <tr>
+      <th align="left" colspan="2">🔐 Login Page</th>
+    </tr>
+    <tr>
+      <td align="center" colspan="2">
+        <div style="border: 1px solid #ccc; border-radius: 8px; padding: 8px; display: inline-block;">
+          <img src="./screenshots/desktop-login.png" width="900" />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th align="left" colspan="2">🐶 Dog Search + Filters</th>
+    </tr>
+    <tr>
+      <td align="center" colspan="2">
+         <img src="./screenshots/desktop-search.png" width="900" />
+      </td>
+    </tr>
+    <tr>
+      <th align="left" colspan="2">🔮 Match Result</th>
+    </tr>
+    <tr>
+      <td align="center" colspan="2">
+        <img src="./screenshots/desktop-match.png" width="900" />
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
-### 📱 Mobile
+### 📱 Mobile View
 
-#### 🔐 Login Page  
-![Mobile Login](./screenshots/mobile-login.png)
-
-#### 🐶 Dog Search + Filters  
-![Mobile Filter](./screenshots/mobile-filter.png)
-
-#### 🔮 Match Result  
-![Mobile Match](./screenshots/mobile-match.png)
+<table>
+  <thead>
+    <tr>
+      <th align="center">🔐 Login Page</th>
+      <th align="center">🐶 Dog Search</th>
+      <th align="center">🦴 Filter</th>
+      <th align="center">🔮 Match Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">
+        <img src="./screenshots/mobile-login.png" width="200" />
+      </td>
+      <td align="center">
+        <img src="./screenshots/mobile-search.png" width="200" />
+      </td>
+      <td align="center">
+        <img src="./screenshots/mobile-filter.png" width="200" />
+      </td>
+      <td align="center">
+        <img src="./screenshots/mobile-match.png" width="200" />
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
