@@ -42,8 +42,8 @@ export default function LoginPage() {
 			</Box>
 			<Card sx={{ maxWidth: 400, p: 4, borderRadius: '16px', textAlign: 'center' }}>
 				<CardContent>
-					<Typography variant="h5" fontWeight={800} color="#60158f">Welcome Back!</Typography>
-					<Typography variant="body1" color="#60158f" mb={2}>Log in to find your perfect pup 🐶</Typography>
+					<Typography variant="h5" fontWeight={800} >Welcome Back!</Typography>
+					<Typography variant="body1" mb={1}>Log in to find your perfect pup 🐶</Typography>
 
 					<Box component="form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
 						<TextField fullWidth name="name" placeholder="Name" margin="normal" onChange={handleChange} />
@@ -55,13 +55,13 @@ export default function LoginPage() {
 							onClick={handleLogin}
 							sx={{
 								mt: 3,
-								bgcolor: '#300D38',
+								bgcolor: '#300e38',
 								color: 'white',
 								fontWeight: 'bold',
 								borderRadius: '999px',
 								textTransform: 'uppercase',
 								'&:hover': {
-									bgcolor: '#7d1f70',
+									bgcolor: '#4a235c',
 								},
 								height: '48px',
 							}}
