@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
-    Box, Typography, Grid, Container, Button, Paper, IconButton, Fade
+    Box, Typography, Grid, Container, Button,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
