@@ -23,8 +23,7 @@ export default function DogSearchPage() {
     const [matchDog, setMatchDog] = useState(null);
     const [matchDialogOpen, setMatchDialogOpen] = useState(false);
 
-
-    // 使用 custom hook 處理所有 filter 相關邏輯
+    
     const filters = useFilters();
 
     const size = 25;

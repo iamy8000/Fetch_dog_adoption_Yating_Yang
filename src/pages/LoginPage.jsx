@@ -4,7 +4,6 @@ import {
 } from '@mui/material';
 import { login } from '../api/fetchAPI';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 export default function LoginPage() {
 	const [formData, setFormData] = useState({ name: '', email: '' });
