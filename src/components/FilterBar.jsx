@@ -49,8 +49,8 @@ export default function FilterBar({
             sx={{
                 borderRadius: '16px',
                 p: 2,
-                mt: 4,
-                mb: 4,
+                mt: 2,
+                mb: 3,
                 boxShadow: '0px 2px 8px rgba(0,0,0,0.1)',
                 width: '100%',
                 maxWidth: '1000px',

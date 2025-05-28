@@ -94,7 +94,7 @@ export default function DogSearchPage() {
                     />
 
                     <Box textAlign="center">
-                        <Typography variant="h6" color="#300D38" mb={2}>
+                        <Typography variant="h6" color="#300D38">
                             Browse adoptable dogs and find your perfect match by clicking on
                             <Button
                                 variant="outlined"
@@ -106,18 +106,20 @@ export default function DogSearchPage() {
                         </Typography>
                     </Box>
 
-                    <Typography
-                        variant="body2"
-                        onClick={() => filters.setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
-                        sx={{
-                            textDecoration: 'underline',
-                            cursor: 'pointer',
-                            ml: 2,
-                            fontWeight: 500,
-                        }}
-                    >
-                        Sort By Breed: {filters.sortOrder === 'asc' ? 'A → Z' : 'Z → A'}
-                    </Typography>
+                    <Box sx={{ width: '100%', textAlign: 'right', mb: 2, px: 2 }}>
+                        <Typography
+                            variant="body2"
+                            onClick={() => filters.setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
+                            sx={{
+                                textDecoration: 'underline',
+                                cursor: 'pointer',
+                                fontWeight: 500,
+                                color: '#300D38',
+                            }}
+                        >
+                            Sort By Breed: {filters.sortOrder === 'asc' ? 'A → Z' : 'Z → A'}
+                        </Typography>
+                    </Box>
 
                     <Grid container spacing={3} justifyContent="center">
                         {loading
