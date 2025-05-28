@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# 🐶 Fetch Dog Matcher
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An adorable React app where users can log in, browse adoptable dogs, filter by breed, zip code, or age, and get matched with their perfect pup — powered by Fetch's take-home API and deployed on AWS.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🔗 Live Site
 
-### `npm start`
+👉 Deploy via AWS S3 [http://fetch-frontend-yating-yang.s3-website-us-west-2.amazonaws.com/](http://fetch-frontend-yating-yang.s3-website-us-west-2.amazonaws.com/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+👉 Deploy via CloudFront [https://d1m96gqp7t0yzz.cloudfront.net](https://d1m96gqp7t0yzz.cloudfront.net)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+> 📱 Works best on **Chrome** and **Firefox**. Safari may block login due to cookie restrictions.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✨ Features
 
-### `npm run build`
+- 🔐 Login with name & email (session-based authentication)
+- 🐕 Search adoptable dogs with filters:
+  - Filter by breed, age range, and ZIP code
+  - Multi-select support for breed & ZIP
+- 📋 Sort alphabetically (A→Z / Z→A)
+- 📄 Paginate search results
+- ❤️ Favorite your preferred dogs
+- 🔮 Click "Get Match" to receive one best-fit dog
+- 📱 Responsive UI for desktop and mobile
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📸 Screenshots
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> Screenshots are located in the `./screenshots/` folder.
 
-### `npm run eject`
+### 🖥️ Desktop
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### 🔐 Login Page  
+![Desktop Login](./screenshots/desktop-login.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### 🐶 Dog Search + Filters  
+![Desktop Search](./screenshots/desktop-search.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### 🔮 Match Result  
+![Desktop Match](./screenshots/desktop-match.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### 📱 Mobile
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### 🔐 Login Page  
+![Mobile Login](./screenshots/mobile-login.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### 🐶 Dog Search + Filters  
+![Mobile Filter](./screenshots/mobile-filter.png)
 
-### Code Splitting
+#### 🔮 Match Result  
+![Mobile Match](./screenshots/mobile-match.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🚀 Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+| Tech              | Purpose                                   |
+|------------------|-------------------------------------------|
+| React + MUI      | UI and layout components                  |
+| React Router     | Route management                          |
+| Axios            | API communication                         |
+| AWS S3           | Static file hosting                       |
+| AWS CloudFront   | CDN delivery + HTTPS                      |
+| Fetch API        | `/auth/login`, `/dogs/search`, `/dogs/match` |
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🛠 Local Setup
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+git clone https://github.com/your-username/fetch-dog-matcher.git
+cd fetch-dog-matcher
+npm install
+npm start
