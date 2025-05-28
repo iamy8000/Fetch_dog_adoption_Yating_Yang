@@ -133,7 +133,7 @@ export default function DogSearchPage() {
                         </Typography>
                     </Box>
 
-                    <Box sx={{ width: '100%', textAlign: isMobile ? 'center' : 'right', mb: isMobile && 1, px: isMobile ? 0 : 5 }}>
+                    <Box sx={{ width: '100%', textAlign: isMobile ? 'center' : 'right', mb: 1, px: isMobile ? 0 : 5 }}>
                         <Typography
                             variant="body2"
                             onClick={() => filters.setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
