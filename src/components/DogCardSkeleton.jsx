@@ -1,11 +1,16 @@
 import { Card, CardContent, Skeleton, Box } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 export default function DogCardSkeleton() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Card
       sx={{
-        height: 360,
-        width: 240,
+        height: isMobile ? 240 : 360,
+        width: isMobile ? 150 : 200,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
