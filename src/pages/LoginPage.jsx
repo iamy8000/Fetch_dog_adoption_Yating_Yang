@@ -29,7 +29,7 @@ export default function LoginPage() {
 			justifyContent="center"
 			alignItems="center"
 			minHeight="100vh"
-			bgcolor="#ffef81"
+			// bgcolor="#ffef81"
 			p={5}
 		>
 			<Box display="flex" justifyContent="center" mb={6}>
@@ -39,7 +39,9 @@ export default function LoginPage() {
 					style={{ width: '30vw', maxWidth: 200 }}
 				/>
 			</Box>
-			<Card sx={{ maxWidth: 400, p: 4, borderRadius: '16px', textAlign: 'center' }}>
+			<Card sx={{
+				maxWidth: 400, p: 4, borderRadius: '16px', textAlign: 'center', boxShadow: '0 6px 18px rgba(0, 0, 0, 0.06)'
+			}}>
 				<CardContent>
 					<Typography variant="h5" fontWeight={800} >Welcome Back!</Typography>
 					<Typography variant="body1" mb={1}>Log in to find your perfect pup 🐶</Typography>
