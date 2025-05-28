@@ -106,7 +106,7 @@ export default function DogSearchPage() {
                 />
             </FilterDrawer>
 
-            <Box bgcolor="#f8f8f8" minHeight="100vh" width="100%">
+            <Box bgcolor="#f8f8f8" minHeight="100vh" width="100%" paddingBottom={2}>
                 <Container maxWidth={false} >
                     {/* Desktop Filter */}
                     {!isMobile && (
