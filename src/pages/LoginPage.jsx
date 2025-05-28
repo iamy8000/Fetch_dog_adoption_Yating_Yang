@@ -48,7 +48,7 @@ export default function LoginPage() {
 			}}>
 				<CardContent>
 					<Typography variant="h5" fontWeight={800} >Welcome Back!</Typography>
-					<Typography variant="body1" mb={1}>Log in to find your perfect pup 🐶</Typography>
+					<Typography variant="body1" mb={3}>Log in to find your perfect pup 🐶</Typography>
 
 					<Box component="form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
 						<TextField
@@ -73,7 +73,7 @@ export default function LoginPage() {
 							variant="contained"
 							onClick={handleLogin}
 							sx={{
-								mt: 3,
+								mt: 4,
 								bgcolor: '#300e38',
 								color: 'white',
 								fontWeight: 'bold',
@@ -88,6 +88,11 @@ export default function LoginPage() {
 							LOG IN
 						</Button>
 					</Box>
+					{/^((?!chrome|android).)*safari/i.test(navigator.userAgent) && (
+						<Typography color="error" fontSize="0.875rem" mt={2}>
+							Safari may block login due to cookie restrictions. Please use Chrome or Firefox for best experience.
+						</Typography>
+					)}
 				</CardContent>
 			</Card>
 		</Box>
