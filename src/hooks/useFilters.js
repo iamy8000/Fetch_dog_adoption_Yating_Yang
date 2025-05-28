@@ -4,6 +4,7 @@ export const useFilters = () => {
   const [selectedBreeds, setSelectedBreeds] = useState([]);
   const [ageRange, setAgeRange] = useState('');
   const [zipCodes, setZipCodes] = useState([]);
+  const [zipInput, setZipInput] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
 
   const clearFilters = useCallback(() => {
@@ -33,12 +34,14 @@ export const useFilters = () => {
 
   return {
     selectedBreeds,
-    zipCodes,
-    ageRange,
-    sortOrder,
     setSelectedBreeds,
-    setAgeRange,
+    zipCodes,
     setZipCodes,
+    zipInput,
+    setZipInput,
+    ageRange,
+    setAgeRange,
+    sortOrder,
     setSortOrder,
     clearFilters,
     getSearchQuery,

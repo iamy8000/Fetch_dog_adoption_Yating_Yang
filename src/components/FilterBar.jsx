@@ -17,10 +17,12 @@ export default function FilterBar({
     const {
         selectedBreeds,
         setSelectedBreeds,
-        ageRange,
-        setAgeRange,
         zipCodes,
         setZipCodes,
+        zipInput,
+        setZipInput,
+        ageRange,
+        setAgeRange,
         sortOrder,
         setSortOrder,
     } = filters;
@@ -30,7 +32,9 @@ export default function FilterBar({
     };
 
     const handleRemoveZip = (zip) => {
-        setZipCodes(zipCodes.filter((z) => z !== zip));
+        const updatedZipCodes = zipCodes.filter((z) => z !== zip);
+        setZipCodes(updatedZipCodes);
+        setZipInput(updatedZipCodes.join(', '));
     };
 
     const handleRemoveAge = () => {
@@ -82,7 +86,7 @@ export default function FilterBar({
                             }
                         />
                     )}
-                    sx={{ minWidth: 200 }}
+                    sx={{ width: 200 }}
                 />
 
                 {/* Dog (age range) */}
@@ -92,7 +96,7 @@ export default function FilterBar({
                     value={ageRange}
                     onChange={(e) => setAgeRange(e.target.value)}
                     SelectProps={{ native: true }}
-                    sx={{ minWidth: 160, bgcolor: 'white' }}
+                    sx={{ width: 200, bgcolor: 'white' }}
                 >
                     <option value="">All Ages</option>
                     <option value="0-2">Puppy (0-2)</option>
@@ -105,16 +109,18 @@ export default function FilterBar({
                 <TextField
                     size="small"
                     placeholder="ZIP codes (comma separated)"
-                    value={zipCodes.join(',')}
-                    onChange={(e) =>
+                    value={zipInput}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        setZipInput(value);
                         setZipCodes(
-                            e.target.value
+                            value
                                 .split(',')
                                 .map((z) => z.trim())
                                 .filter((z) => z)
-                        )
-                    }
-                    sx={{ minWidth: 200 }}
+                        );
+                    }}
+                    sx={{ width: 200 }}
                 />
 
                 {/* Sort Button */}
