@@ -23,7 +23,6 @@ export default function DogSearchPage() {
     const [matchDog, setMatchDog] = useState(null);
     const [matchDialogOpen, setMatchDialogOpen] = useState(false);
 
-    
     const filters = useFilters();
 
     const size = 25;
@@ -106,6 +105,19 @@ export default function DogSearchPage() {
                             </Button>
                         </Typography>
                     </Box>
+
+                    <Typography
+                        variant="body2"
+                        onClick={() => filters.setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
+                        sx={{
+                            textDecoration: 'underline',
+                            cursor: 'pointer',
+                            ml: 2,
+                            fontWeight: 500,
+                        }}
+                    >
+                        Sort By Breed: {filters.sortOrder === 'asc' ? 'A → Z' : 'Z → A'}
+                    </Typography>
 
                     <Grid container spacing={3} justifyContent="center">
                         {loading

@@ -7,6 +7,7 @@ import {
     Chip,
     Typography,
 } from '@mui/material';
+import zipData from '../data/zip_city_state.json';
 
 export default function FilterBar({
     breedOptions,
@@ -19,12 +20,11 @@ export default function FilterBar({
         setSelectedBreeds,
         zipCodes,
         setZipCodes,
-        zipInput,
-        setZipInput,
         ageRange,
         setAgeRange,
         sortOrder,
-        setSortOrder,
+        debouncedSetInputValue,
+        filteredZipOptions,
     } = filters;
 
     const handleRemoveBreed = (breedToRemove) => {
@@ -34,7 +34,6 @@ export default function FilterBar({
     const handleRemoveZip = (zip) => {
         const updatedZipCodes = zipCodes.filter((z) => z !== zip);
         setZipCodes(updatedZipCodes);
-        setZipInput(updatedZipCodes.join(', '));
     };
 
     const handleRemoveAge = () => {
@@ -48,14 +47,13 @@ export default function FilterBar({
         <Paper
             elevation={1}
             sx={{
-                borderRadius: '12px',
+                borderRadius: '16px',
                 p: 2,
                 mt: 4,
                 mb: 4,
-                bgcolor: '#fff',
                 boxShadow: '0px 2px 8px rgba(0,0,0,0.1)',
                 width: '100%',
-                maxWidth: '1200px',
+                maxWidth: '1000px',
             }}
         >
             {/* Top row: Inputs */}
@@ -75,7 +73,7 @@ export default function FilterBar({
                     options={breedOptions}
                     value={selectedBreeds}
                     onChange={(e, newValue) => setSelectedBreeds(newValue)}
-                    renderTags={() => null} // 👈 prevent chips
+                    renderTags={() => null}
                     renderInput={(params) => (
                         <TextField
                             {...params}
@@ -104,37 +102,21 @@ export default function FilterBar({
                     <option value="8+">Senior (8+)</option>
                 </TextField>
 
-
-                {/* ZIP Code */}
-                <TextField
+                <Autocomplete
+                    multiple
                     size="small"
-                    placeholder="ZIP codes (comma separated)"
-                    value={zipInput}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        setZipInput(value);
-                        setZipCodes(
-                            value
-                                .split(',')
-                                .map((z) => z.trim())
-                                .filter((z) => z)
-                        );
-                    }}
-                    sx={{ width: 200 }}
+                    options={filteredZipOptions}
+                    getOptionLabel={(option) => option.label}
+                    renderTags={() => null}
+                    onChange={(e, newValue) =>
+                        setZipCodes(newValue.map((item) => item.value))
+                    }
+                    onInputChange={(e, value) => debouncedSetInputValue(value)}
+                    renderInput={(params) => (
+                        <TextField {...params} placeholder="Search ZIP codes" />
+                    )}
+                    sx={{ width: 220 }}
                 />
-
-                {/* Sort Button */}
-                <Button
-                    variant="text"
-                    onClick={() => setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
-                    sx={{
-                        color: '#333',
-                        fontWeight: 500,
-                        '&:hover': { bgcolor: '#f2f2f2' },
-                    }}
-                >
-                    Sort {sortOrder === 'asc' ? 'A → Z' : 'Z → A'}
-                </Button>
 
                 {/* Main CTA */}
                 <Button
