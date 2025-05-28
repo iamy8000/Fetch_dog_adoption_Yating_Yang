@@ -4,10 +4,9 @@ import {
     Paper,
     TextField,
     Autocomplete,
+    Chip,
+    Typography,
 } from '@mui/material';
-import {
-    RestartAlt,
-} from '@mui/icons-material';
 
 export default function FilterBar({
     breedOptions,
@@ -26,116 +25,181 @@ export default function FilterBar({
         setSortOrder,
     } = filters;
 
+    const handleRemoveBreed = (breedToRemove) => {
+        setSelectedBreeds(selectedBreeds.filter((b) => b !== breedToRemove));
+    };
+
+    const handleRemoveZip = (zip) => {
+        setZipCodes(zipCodes.filter((z) => z !== zip));
+    };
+
+    const handleRemoveAge = () => {
+        setAgeRange('');
+    };
+
+    const showClearAll =
+        selectedBreeds.length > 0 || zipCodes.length > 0 || ageRange;
+
     return (
-        <Box
-            component={Paper}
+        <Paper
             elevation={1}
             sx={{
                 borderRadius: '12px',
                 p: 2,
                 mt: 4,
                 mb: 4,
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 2,
-                alignItems: 'center',
-                justifyContent: 'center',
                 bgcolor: '#fff',
                 boxShadow: '0px 2px 8px rgba(0,0,0,0.1)',
+                width: '100%',
+                maxWidth: '1200px',
             }}
         >
-            {/* Breed Autocomplete */}
-            <Autocomplete
-                multiple
-                size="small"
-                options={breedOptions}
-                value={selectedBreeds}
-                onChange={(e, newValue) => setSelectedBreeds(newValue)}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        placeholder="Breeds"
-                    />
-                )}
-                sx={{ minWidth: 200 }}
-            />
-
-            {/* Dog (age range) */}
-            <TextField
-                select
-                size="small"
-                value={ageRange}
-                onChange={(e) => setAgeRange(e.target.value)}
-                SelectProps={{ native: true }}
+            {/* Top row: Inputs */}
+            <Box
                 sx={{
-                    minWidth: 160,
-                    bgcolor: 'white',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
                 }}
             >
-                <option value="">All Ages</option>
-                <option value="0-2">Puppy (0-2)</option>
-                <option value="3-7">Adult (3-7)</option>
-                <option value="8+">Senior (8+)</option>
-            </TextField>
+                {/* Breed Autocomplete */}
+                <Autocomplete
+                    multiple
+                    size="small"
+                    options={breedOptions}
+                    value={selectedBreeds}
+                    onChange={(e, newValue) => setSelectedBreeds(newValue)}
+                    renderTags={() => null} // 👈 prevent chips
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            placeholder={
+                                selectedBreeds.length > 0
+                                    ? `${selectedBreeds.length} breed${selectedBreeds.length > 1 ? 's' : ''} selected`
+                                    : 'Search breeds'
+                            }
+                        />
+                    )}
+                    sx={{ minWidth: 200 }}
+                />
 
-            {/* ZIP Code */}
-            <TextField
-                size="small"
-                placeholder="ZIP codes (comma separated)"
-                value={zipCodes.join(',')}
-                onChange={(e) =>
-                    setZipCodes(
-                        e.target.value.split(',').map((z) => z.trim()).filter((z) => z)
-                    )
-                }
-                sx={{ minWidth: 200 }}
-            />
+                {/* Dog (age range) */}
+                <TextField
+                    select
+                    size="small"
+                    value={ageRange}
+                    onChange={(e) => setAgeRange(e.target.value)}
+                    SelectProps={{ native: true }}
+                    sx={{ minWidth: 160, bgcolor: 'white' }}
+                >
+                    <option value="">All Ages</option>
+                    <option value="0-2">Puppy (0-2)</option>
+                    <option value="3-7">Adult (3-7)</option>
+                    <option value="8+">Senior (8+)</option>
+                </TextField>
 
-            {/* Sort Button */}
-            <Button
-                variant="text"
-                onClick={() => setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
-                sx={{
-                    color: '#333',
-                    fontWeight: 500,
-                    '&:hover': { bgcolor: '#f2f2f2' },
-                }}
-            >
-                Sort {sortOrder === 'asc' ? 'A → Z' : 'Z → A'}
-            </Button>
 
-            {/* Clear Filters */}
-            <Button
-                variant="outlined"
-                startIcon={<RestartAlt />}
-                onClick={onClearFilters}
-                sx={{
-                    borderColor: '#60158f',
-                    color: '#60158f',
-                    borderRadius: '20px',
-                    height: 40,
-                    px: 3,
-                }}
-            >
-                Clear
-            </Button>
+                {/* ZIP Code */}
+                <TextField
+                    size="small"
+                    placeholder="ZIP codes (comma separated)"
+                    value={zipCodes.join(',')}
+                    onChange={(e) =>
+                        setZipCodes(
+                            e.target.value
+                                .split(',')
+                                .map((z) => z.trim())
+                                .filter((z) => z)
+                        )
+                    }
+                    sx={{ minWidth: 200 }}
+                />
 
-            {/* Main CTA */}
-            <Button
-                variant="contained"
-                onClick={onSearch}
-                sx={{
-                    bgcolor: '#300D38',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    borderRadius: '20px',
-                    height: 40,
-                    px: 4,
-                    '&:hover': { bgcolor: '#7d1f70' },
-                }}
-            >
-                Search
-            </Button>
-        </Box>
+                {/* Sort Button */}
+                <Button
+                    variant="text"
+                    onClick={() => setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))}
+                    sx={{
+                        color: '#333',
+                        fontWeight: 500,
+                        '&:hover': { bgcolor: '#f2f2f2' },
+                    }}
+                >
+                    Sort {sortOrder === 'asc' ? 'A → Z' : 'Z → A'}
+                </Button>
+
+                {/* Main CTA */}
+                <Button
+                    variant="contained"
+                    onClick={onSearch}
+                    sx={{
+                        bgcolor: '#300D38',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        borderRadius: '20px',
+                        height: 40,
+                        px: 4,
+                        '&:hover': { bgcolor: '#7d1f70' },
+                    }}
+                >
+                    Search
+                </Button>
+            </Box>
+            {(showClearAll || sortOrder !== 'asc') && (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        gap: 1,
+                        mt: 2,
+                        justifyContent: 'center',
+                    }}
+                >
+                    {selectedBreeds.map((breed) => (
+                        <Chip
+                            key={breed}
+                            label={breed}
+                            onDelete={() => handleRemoveBreed(breed)}
+                            sx={{ bgcolor: '#ffe046', color: '#000', fontWeight: 500 }}
+                        />
+                    ))}
+
+                    {zipCodes.map((zip) => (
+                        <Chip
+                            key={zip}
+                            label={`ZIP: ${zip}`}
+                            onDelete={() => handleRemoveZip(zip)}
+                            sx={{ bgcolor: '#ffe046', color: '#000', fontWeight: 500 }}
+                        />
+                    ))}
+
+                    {ageRange && (
+                        <Chip
+                            label={`Age: ${ageRange}`}
+                            onDelete={handleRemoveAge}
+                            sx={{ bgcolor: '#ffe046', color: '#000', fontWeight: 500 }}
+                        />
+                    )}
+
+                    {showClearAll && (
+                        <Typography
+                            variant="body2"
+                            onClick={onClearFilters}
+                            sx={{
+                                textDecoration: 'underline',
+                                cursor: 'pointer',
+                                ml: 2,
+                                fontWeight: 500,
+                            }}
+                        >
+                            Clear all
+                        </Typography>
+                    )}
+                </Box>
+            )}
+        </Paper>
     );
 }
